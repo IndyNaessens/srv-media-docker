@@ -1,0 +1,124 @@
+version: "3"
+services:
+
+  #PLEX
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    network_mode: host
+    restart: unless-stopped
+
+    environment:
+      - TZ=Europe/Brussels 
+      - PUID=1000
+      - PGID=1000
+
+    volumes:
+      - /home/indy/docker/data/plex/config:/config
+      - /home/indy/docker/data/plex/transcode:/transcode
+      - /mnt/nfs:/data
+      - /home/indy/certification:/certification
+
+  #SABNZBD
+  sabnzbd:
+    container_name: sabnzbd
+    image: linuxserver/sabnzbd
+    restart: unless-stopped
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+
+    volumes:
+      - /home/indy/docker/data/sabnzbd/config:/config
+      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete 
+      - /home/indy/docker/data/sabnzbd/incomplete-downloads:/downloads-incomplete
+
+  #DELUGE
+  deluge:
+    container_name: deluge
+    image: linuxserver/deluge
+    network_mode: host
+    restart: unless-stopped
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      - UMASK_SET=007
+
+    volumes:
+      - /home/indy/docker/data/deluge/config:/config
+      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
+      - /home/indy/docker/data/deluge/incomplete-downloads:/torrents-incomplete
+
+  #SONARR
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr
+    restart: unless-stopped
+
+    ports:
+      - "8989:8989"
+
+    depends_on:
+      - sabnzbd
+      - deluge
+      - jackett
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+
+    volumes:
+      - /home/indy/docker/data/sonarr/config:/config 
+      - /mnt/nfs/Tv:/tv 
+      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete 
+      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
+
+  #RADARR
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr
+    restart: unless-stopped
+
+    ports:
+      - "7878:7878"
+
+    depends_on:
+      - sabnzbd
+      - deluge
+      - jackett
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+
+    volumes:
+      - /home/indy/docker/data/radarr/config:/config 
+      - /mnt/nfs/Movies:/movies 
+      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete
+      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
+
+  #JACKETT
+  jackett:
+    container_name: jackett
+    image: linuxserver/jackett
+    restart: unless-stopped
+
+    ports:
+      - "9117:9117"
+
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+
+    volumes:
+      - /home/indy/docker/data/jackett/config:/config
