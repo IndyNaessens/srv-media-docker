@@ -1,4 +1,3 @@
 #!/bin/bash
 
-cd ..
-docker-compose up -d --no-deps --quiet-pull sonarr
+docker-compose -f /home/indy/docker/docker-compose.yml up -d --no-deps --quiet-pull sonarr
