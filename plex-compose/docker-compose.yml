@@ -1,0 +1,18 @@
+version: "3"
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    network_mode: host
+    restart: unless-stopped
+
+    environment:
+      - TZ=Europe/Brussels 
+      - PUID=1000
+      - PGID=1000
+
+    volumes:
+      - /home/indy/docker/data/plex/config:/config
+      - /home/indy/docker/data/plex/transcode:/transcode
+      - /mnt/nfs:/data
+      - /home/indy/certification:/certification
