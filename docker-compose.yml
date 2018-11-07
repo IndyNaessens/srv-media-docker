@@ -71,7 +71,7 @@ services:
 
     depends_on:
       - sabnzbd
-      - deluge
+      - qbittorrent
       - jackett
 
     environment:
@@ -96,7 +96,7 @@ services:
 
     depends_on:
       - sabnzbd
-      - deluge
+      - qbittorrent
       - jackett
 
     environment:
