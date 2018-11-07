@@ -1,6 +1,6 @@
 version: "3"
 services:
-
+  
   #PLEX
   plex:
     container_name: plex
@@ -38,23 +38,27 @@ services:
       - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete 
       - /home/indy/docker/data/sabnzbd/incomplete-downloads:/downloads-incomplete
 
-  #DELUGE
-  deluge:
-    container_name: deluge
-    image: linuxserver/deluge
-    network_mode: host
+  #QBITTORRENT
+  qbittorrent:
+    container_name: qbittorrent
+    image:  linuxserver/qbittorrent
     restart: unless-stopped
+
+    ports:
+      - "6881:6881"
+      - "6881:6881/udp"
+      - "8181:8181"
 
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Brussels
-      - UMASK_SET=007
+      - WEBUI_PORT=8181
 
     volumes:
-      - /home/indy/docker/data/deluge/config:/config
-      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
-      - /home/indy/docker/data/deluge/incomplete-downloads:/torrents-incomplete
+      - /home/indy/docker/data/qbittorrent/config:/config
+      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
+      - /home/indy/docker/data/qbittorrent/incomplete-downloads:/torrents-incomplete
 
   #SONARR
   sonarr:
@@ -78,8 +82,8 @@ services:
     volumes:
       - /home/indy/docker/data/sonarr/config:/config 
       - /mnt/nfs/Tv:/tv 
-      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete 
-      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
+      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete
+      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
 
   #RADARR
   radarr:
@@ -104,7 +108,7 @@ services:
       - /home/indy/docker/data/radarr/config:/config 
       - /mnt/nfs/Movies:/movies 
       - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete
-      - /home/indy/docker/data/deluge/downloads:/torrents-complete 
+      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
 
   #JACKETT
   jackett:
