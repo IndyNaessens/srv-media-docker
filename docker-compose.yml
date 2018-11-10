@@ -12,6 +12,7 @@ services:
       - TZ=Europe/Brussels 
       - PUID=1000
       - PGID=1000
+      - PLEX_CLAIM="claim-cPGyNLqqbft7dGY8SkDh"
 
     volumes:
       - /home/indy/docker/data/plex/config:/config
