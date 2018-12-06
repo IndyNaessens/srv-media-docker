@@ -128,8 +128,8 @@ services:
     volumes:
       - /home/indy/docker/data/jackett/config:/config
 
-  #tautulli
-  tautulli:
+  #TAUTULLI
+  plex-monitor:
     container_name: plex-monitor
     image: tautulli/tautulli
     restart: unless-stopped
@@ -144,4 +144,3 @@ services:
       
     volumes:
       - /home/indy/docker/data/plex-monitor:/config
-      - /home/indy/docker/data/plex/config/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
