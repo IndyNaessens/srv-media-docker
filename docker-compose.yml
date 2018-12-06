@@ -127,3 +127,21 @@ services:
 
     volumes:
       - /home/indy/docker/data/jackett/config:/config
+
+  #tautulli
+  tautulli:
+    container_name: plex-monitor
+    image: tautulli/tautulli
+    restart: unless-stopped
+    
+    ports:
+      - "8282:8282"
+      
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      
+    volumes:
+      - /home/indy/docker/data/plex-monitor:/config
+      - /home/indy/docker/data/plex/config/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
