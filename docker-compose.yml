@@ -70,11 +70,6 @@ services:
     ports:
       - "8989:8989"
 
-    depends_on:
-      - sabnzbd
-      - qbittorrent
-      - jackett
-
     environment:
       - PUID=1000
       - PGID=1000
@@ -94,11 +89,6 @@ services:
 
     ports:
       - "7878:7878"
-
-    depends_on:
-      - sabnzbd
-      - qbittorrent
-      - jackett
 
     environment:
       - PUID=1000
