@@ -12,32 +12,12 @@ services:
       - TZ=Europe/Brussels 
       - PUID=1000
       - PGID=1000
-      - PLEX_CLAIM="claim-pYVR5JbKTySqQgbNz5Ww"
 
     volumes:
       - /home/indy/docker/data/plex/config:/config
       - /home/indy/docker/data/plex/transcode:/transcode
       - /mnt/nfs:/data
       - /home/indy/certification:/certification
-
-  #SABNZBD
-  sabnzbd:
-    container_name: sabnzbd
-    image: linuxserver/sabnzbd
-    restart: unless-stopped
-
-    ports:
-      - "8080:8080"
-
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Brussels
-
-    volumes:
-      - /home/indy/docker/data/sabnzbd/config:/config
-      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete 
-      - /home/indy/docker/data/sabnzbd/incomplete-downloads:/downloads-incomplete
 
   #QBITTORRENT
   qbittorrent:
@@ -58,8 +38,8 @@ services:
 
     volumes:
       - /home/indy/docker/data/qbittorrent/config:/config
-      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
-      - /home/indy/docker/data/qbittorrent/incomplete-downloads:/torrents-incomplete
+      - /mnt/nfs/downloads/complete:/torrents-complete
+      - /mnt/nfs/downloads/incomplete:/torrents-incomplete
 
   #SONARR
   sonarr:
@@ -78,8 +58,7 @@ services:
     volumes:
       - /home/indy/docker/data/sonarr/config:/config 
       - /mnt/nfs/Tv:/tv 
-      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete
-      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
+      - /mnt/nfs/downloads/complete:/torrents-complete
 
   #RADARR
   radarr:
@@ -98,8 +77,7 @@ services:
     volumes:
       - /home/indy/docker/data/radarr/config:/config 
       - /mnt/nfs/Movies:/movies 
-      - /home/indy/docker/data/sabnzbd/downloads:/downloads-complete
-      - /home/indy/docker/data/qbittorrent/downloads:/torrents-complete
+      - /mnt/nfs/downloads/complete:/torrents-complete
 
   #JACKETT
   jackett:
