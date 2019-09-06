@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   
   #PLEX
@@ -6,7 +6,6 @@ services:
     container_name: plex
     image: plexinc/pms-docker
     network_mode: host
-    restart: on-failure
     
     deploy:
       restart_policy:
@@ -33,8 +32,7 @@ services:
   qbittorrent:
     container_name: qbittorrent
     image:  linuxserver/qbittorrent
-    restart: on-failure
-    
+  
     deploy:
       restart_policy:
         condition: on-failure
@@ -65,7 +63,6 @@ services:
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr
-    restart: on-failure
     
     deploy:
       restart_policy:
@@ -94,7 +91,6 @@ services:
   radarr:
     container_name: radarr
     image: linuxserver/radarr
-    restart: on-failure
     
     deploy:
       restart_policy:
@@ -125,7 +121,6 @@ services:
   jackett:
     container_name: jackett
     image: linuxserver/jackett
-    restart: on-failure
     
     deploy:
       restart_policy:
