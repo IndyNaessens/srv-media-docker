@@ -115,9 +115,7 @@ services:
       - /mnt/nfs/Movies:/movies 
       - /mnt/nfs/downloads/complete:/torrents-complete
 
-  #JACKETT        limits:
-          cpus: '0.50'
-          memory: 50M
+  #JACKETT
   jackett:
     container_name: jackett
     image: linuxserver/jackett
