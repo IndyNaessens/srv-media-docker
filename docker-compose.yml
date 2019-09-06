@@ -6,7 +6,17 @@ services:
     container_name: plex
     image: plexinc/pms-docker
     network_mode: host
-    restart: unless-stopped
+    restart: on-failure
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    
+    limits:
+      memory: 2048M
 
     environment:
       - TZ=Europe/Brussels 
@@ -23,7 +33,17 @@ services:
   qbittorrent:
     container_name: qbittorrent
     image:  linuxserver/qbittorrent
-    restart: unless-stopped
+    restart: on-failure
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+    limits:
+      memory: 1024M
 
     ports:
       - "6881:6881"
@@ -45,7 +65,17 @@ services:
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr
-    restart: unless-stopped
+    restart: on-failure
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+    limits:
+      memory: 1524M
 
     ports:
       - "8989:8989"
@@ -64,7 +94,17 @@ services:
   radarr:
     container_name: radarr
     image: linuxserver/radarr
-    restart: unless-stopped
+    restart: on-failure
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+    limits:
+      memory: 1524M
 
     ports:
       - "7878:7878"
@@ -79,11 +119,23 @@ services:
       - /mnt/nfs/Movies:/movies 
       - /mnt/nfs/downloads/complete:/torrents-complete
 
-  #JACKETT
+  #JACKETT        limits:
+          cpus: '0.50'
+          memory: 50M
   jackett:
     container_name: jackett
     image: linuxserver/jackett
-    restart: unless-stopped
+    restart: on-failure
+    
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+    limits:
+      memory: 1024M
 
     ports:
       - "9117:9117"
