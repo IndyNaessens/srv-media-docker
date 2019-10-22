@@ -1,16 +1,29 @@
 version: "3"
 
+#Local NAS
 volumes:
-  #Local NAS
-  nfs-all:
+  nfs-download:
     driver: local
     driver_opts:
       type: "nfs"
       o: "addr=192.168.12.200,nolock,soft,rw"
-      device: ":/Multimedia/Videos/"
+      device: ":/Multimedia/Videos/downloads"
+      
+  nfs-movie:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.12.200,nolock,soft,rw"
+      device: ":/Multimedia/Videos/Movies"
+      
+  nfs-tv:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.12.200,nolock,soft,rw"
+      device: ":/Multimedia/Videos/Tv"
 
 services:  
-  #PLEX
   plex:
     container_name: plex
     image: plexinc/pms-docker
@@ -25,10 +38,10 @@ services:
     volumes:
       - /home/indy/docker/data/plex/config:/config
       - /home/indy/docker/data/plex/transcode:/transcode
-      - nfs:/data
       - /home/indy/certification:/certification
+      - nfs-movie:/movies
+      - nfs-tv:/tv
 
-  #QBITTORRENT
   qbittorrent:
     container_name: qbittorrent
     image:  linuxserver/qbittorrent
@@ -47,10 +60,8 @@ services:
 
     volumes:
       - /home/indy/docker/data/qbittorrent/config:/config
-      - /mnt/nfs/downloads/complete:/torrents-complete
-      - /mnt/nfs/downloads/incomplete:/torrents-incomplete
+      - nfs-download:/downloads
 
-  #SONARR
   sonarr:
     container_name: sonarr
     image: linuxserver/sonarr
@@ -66,10 +77,9 @@ services:
 
     volumes:
       - /home/indy/docker/data/sonarr/config:/config 
-      - nfs/Tv:/tv 
-      - nfs/downloads/complete:/torrents-complete
+      - nfs-tv:/tv
+      - nfs-download:/downloads
 
-  #RADARR
   radarr:
     container_name: radarr
     image: linuxserver/radarr
@@ -85,10 +95,9 @@ services:
 
     volumes:
       - /home/indy/docker/data/radarr/config:/config 
-      - nfs/Movies:/movies 
-      - nfs/downloads/complete:/torrents-complete
+      - nfs-movie:/movies
+      - nfs-download:/downloads
 
-  #JACKETT
   jackett:
     container_name: jackett
     image: linuxserver/jackett
