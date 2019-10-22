@@ -5,23 +5,23 @@ volumes:
   nfs-download:
     driver: local
     driver_opts:
-      type: "nfs"
-      o: "addr=192.168.12.200,nolock,soft,rw"
-      device: ":/Multimedia/Videos/downloads"
+      type: nfs4
+      o: addr=192.168.12.200,nolock,soft,rw
+      device: :/Multimedia/Videos/downloads
       
   nfs-movie:
     driver: local
     driver_opts:
-      type: "nfs"
-      o: "addr=192.168.12.200,nolock,soft,rw"
-      device: ":/Multimedia/Videos/Movies"
+      type: nfs4
+      o: addr=192.168.12.200,nolock,soft,rw
+      device: :/Multimedia/Videos/Movies
       
   nfs-tv:
     driver: local
     driver_opts:
-      type: "nfs"
-      o: "addr=192.168.12.200,nolock,soft,rw"
-      device: ":/Multimedia/Videos/Tv"
+      type: nfs4
+      o: addr=192.168.12.200,nolock,soft,rw
+      device: :/Multimedia/Videos/Tv
 
 services:  
   plex:
