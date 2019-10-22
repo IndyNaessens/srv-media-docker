@@ -1,6 +1,15 @@
 version: "3"
-services:
-  
+
+volumes:
+  #Local NAS
+  nfs-all:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.12.200,nolock,soft,rw"
+      device: ":/Multimedia/Videos/"
+
+services:  
   #PLEX
   plex:
     container_name: plex
@@ -16,7 +25,7 @@ services:
     volumes:
       - /home/indy/docker/data/plex/config:/config
       - /home/indy/docker/data/plex/transcode:/transcode
-      - /mnt/nfs:/data
+      - nfs:/data
       - /home/indy/certification:/certification
 
   #QBITTORRENT
@@ -57,8 +66,8 @@ services:
 
     volumes:
       - /home/indy/docker/data/sonarr/config:/config 
-      - /mnt/nfs/Tv:/tv 
-      - /mnt/nfs/downloads/complete:/torrents-complete
+      - nfs/Tv:/tv 
+      - nfs/downloads/complete:/torrents-complete
 
   #RADARR
   radarr:
@@ -76,8 +85,8 @@ services:
 
     volumes:
       - /home/indy/docker/data/radarr/config:/config 
-      - /mnt/nfs/Movies:/movies 
-      - /mnt/nfs/downloads/complete:/torrents-complete
+      - nfs/Movies:/movies 
+      - nfs/downloads/complete:/torrents-complete
 
   #JACKETT
   jackett:
