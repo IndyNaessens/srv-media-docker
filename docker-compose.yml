@@ -13,10 +13,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      resources:
-        limits:
-          memory: 2048M
-      
+    
+    limits:
+      memory: 2048M
+
     environment:
       - TZ=Europe/Brussels 
       - PUID=1000
@@ -39,9 +39,9 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      resources:
-        limits:
-          memory: 1024M
+
+    limits:
+      memory: 1024M
 
     ports:
       - "6881:6881"
@@ -70,9 +70,9 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      resources:
-        limits:
-          memory: 1524M
+
+    limits:
+      memory: 1524M
 
     ports:
       - "8989:8989"
@@ -98,9 +98,9 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      resources:
-        limits:
-          memory: 1524M
+
+    limits:
+      memory: 1524M
 
     ports:
       - "7878:7878"
@@ -126,9 +126,9 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-      resources:
-        limits:
-          memory: 1024M
+
+    limits:
+      memory: 1024M
 
     ports:
       - "9117:9117"
