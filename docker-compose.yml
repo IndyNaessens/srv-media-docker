@@ -80,10 +80,6 @@ services:
       - nfs-tv:/tv
       - nfs-download:/downloads
 
-    depends_on:
-      - qbittorrent
-      - jackett
-
   radarr:
     container_name: radarr
     image: linuxserver/radarr
@@ -101,10 +97,6 @@ services:
       - /home/indy/docker/data/radarr/config:/config 
       - nfs-movie:/movies
       - nfs-download:/downloads
-
-    depends_on:
-      - qbittorrent
-      - jackett
 
   jackett:
     container_name: jackett
