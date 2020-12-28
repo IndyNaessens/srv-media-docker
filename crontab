@@ -1,0 +1,2 @@
+30 8 * * * /bin/bash /home/indy/docker/compose/update.sh > /dev/null 2>&1
+0 * * * * /bin/bash /home/indy/docker/compose/update-jackett.sh > /dev/null 2>&1
