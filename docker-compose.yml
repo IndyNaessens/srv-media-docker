@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 #Local NAS
 volumes:
@@ -6,21 +6,21 @@ volumes:
     driver: local
     driver_opts:
       type: nfs4
-      o: addr=192.168.12.200,nolock,soft,rw
+      o: addr=192.168.12.201,nolock,soft,rw
       device: :/Multimedia/Videos/downloads
       
   nfs-movie:
     driver: local
     driver_opts:
       type: nfs4
-      o: addr=192.168.12.200,nolock,soft,rw
+      o: addr=192.168.12.201,nolock,soft,rw
       device: :/Multimedia/Videos/Movies
       
   nfs-tv:
     driver: local
     driver_opts:
       type: nfs4
-      o: addr=192.168.12.200,nolock,soft,rw
+      o: addr=192.168.12.201,nolock,soft,rw
       device: :/Multimedia/Videos/Tv
 
 services:  
@@ -38,7 +38,7 @@ services:
     volumes:
       - /home/indy/docker/data/plex/config:/config
       - /home/indy/docker/data/plex/transcode:/transcode
-      - /home/indy/certification:/certification
+      - /home/indy/docker/data/plex/cert:/cert
       - nfs-movie:/movies
       - nfs-tv:/tv
 
@@ -80,6 +80,10 @@ services:
       - nfs-tv:/tv
       - nfs-download:/downloads
 
+    depends_on:
+      - qbittorrent
+      - jackett
+
   radarr:
     container_name: radarr
     image: linuxserver/radarr
@@ -97,6 +101,10 @@ services:
       - /home/indy/docker/data/radarr/config:/config 
       - nfs-movie:/movies
       - nfs-download:/downloads
+
+    depends_on:
+      - qbittorrent
+      - jackett
 
   jackett:
     container_name: jackett
